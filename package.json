@@ -2,14 +2,7 @@
   "name": "carcassonne-tiles",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "classnames": "^2.2.6",
-    "lodash": "^4.17.11",
-    "node-sass": "^4.11.0",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
-    "react-scripts": "2.1.3"
-  },
+  "homepage": "http://tscizzle.github.io/carcassonne-tiles",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -19,6 +12,18 @@
     "not ie <= 11",
     "not op_mini all"
   ],
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "lodash": "^4.17.11",
+    "node-sass": "^4.11.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-scripts": "2.1.3"
+  },
+  "devDependencies": {
+    "gh-pages": "^2.0.1",
+    "npm-run-all": "^4.1.5"
+  },
   "scripts": {
     "wipe-css": "rm -r src/stylesheets ||:",
     "build-css": "node-sass src/ -o src/stylesheets",
@@ -28,10 +33,9 @@
     "start": "BROWSER=None react-scripts start",
     "build": "npm run build-css && react-scripts build",
     "heroku-postbuild": "npm run build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "devDependencies": {
-    "npm-run-all": "^4.1.5"
   }
 }
