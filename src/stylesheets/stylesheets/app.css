@@ -1,0 +1,63 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%; }
+
+.tile-counts-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+  padding: 20px; }
+
+.tile-count {
+  display: flex;
+  flex-direction: column;
+  margin: 20px; }
+
+.tile-count .tile-count-pic {
+  box-shadow: 0px 0px 10px #555;
+  border: solid 3px #333;
+  border-radius: 5px; }
+
+.tile-count .tile-count-pic.disabled {
+  opacity: 0.6; }
+
+.tile-count .tile-count-pic:not(.disabled) {
+  cursor: pointer; }
+
+.tile-count .tile-count-pic:not(.disabled):hover {
+  opacity: 0.8; }
+
+.tile-count .tile-count-pic:not(.disabled):active {
+  opacity: 0.95; }
+
+.tile-count .tile-count-nums {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px; }
+
+.tile-count .tile-count-nums .tile-count-remaining {
+  margin-right: 5px;
+  font-size: 2em; }
+
+.tile-count .tile-count-nums .tile-count-remaining.red {
+  color: red; }
+
+.tiles-used-container {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  overflow-x: scroll; }
+
+.tile-used {
+  margin: 5px; }
+
+.tile-used .tile-used-pic {
+  height: 55px;
+  width: 55px;
+  box-shadow: 0px 0px 5px #555;
+  border: solid 1px #333;
+  border-radius: 3px; }
