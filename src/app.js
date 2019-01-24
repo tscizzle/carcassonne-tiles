@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import classNames from 'classnames';
+
+import NiceButton from 'components/nice-button/nice-button';
+
 import 'stylesheets/app.css';
 
 class App extends Component {
   state = {
-    tilesUsed: [],
+    tilesUsed: ['city1rwe'],
   };
 
   tileTotals = {
@@ -29,8 +33,8 @@ class App extends Component {
     city4: { tileKey: 'city4', count: 1 },
     cloister: { tileKey: 'cloister', count: 4 },
     cloisterr: { tileKey: 'cloisterr', count: 2 },
-    road2ns: { tileKey: 'road2ns', count: 9 },
-    road2sw: { tileKey: 'road2sw', count: 2 },
+    road2ns: { tileKey: 'road2ns', count: 8 },
+    road2sw: { tileKey: 'road2sw', count: 9 },
     road3: { tileKey: 'road3', count: 4 },
     road4: { tileKey: 'road4', count: 1 },
   };
@@ -43,8 +47,16 @@ class App extends Component {
     return currentTileCounts;
   };
 
-  setTileUsed = tileKey => {
+  addUsedTile = tileKey => {
     const newTilesUsed = [...this.state.tilesUsed, tileKey];
+    this.setState({ tilesUsed: newTilesUsed });
+  };
+
+  undoUsedTile = () => {
+    const newTilesUsed = this.state.tilesUsed.slice(
+      0,
+      this.state.tilesUsed.length - 1
+    );
     this.setState({ tilesUsed: newTilesUsed });
   };
 
@@ -62,21 +74,30 @@ class App extends Component {
             tileKey={tileKey}
             remaining={remaining}
             total={count}
-            setTileUsedFunc={this.setTileUsed}
+            addUsedTileFunc={this.addUsedTile}
             key={tileKey}
           />
         );
       }
     );
-    const tileUsedCells = _.map(this.state.tilesUsed, tileKey => {
-      return <TileUsed tileKey={tileKey} key={tileKey} />;
-    });
+    const lastTileUsed = _.last(this.state.tilesUsed);
+    const lastTileUsedImg = require(`assets/images/${lastTileUsed}.png`);
     return (
       <div className="app">
         <h1>Tiles Remaining ({numTilesRemaining})</h1>
         <div className="tile-counts-container">{tileTypeRows}</div>
-        <h1>Tiles Used ({numTilesUsed})</h1>
-        <div className="tiles-used-container">{tileUsedCells}</div>
+        {lastTileUsed && (
+          <div className="undo-area">
+            <NiceButton isPrimary={true} onClick={this.undoUsedTile}>
+              Undo
+            </NiceButton>
+            <img
+              className="tile-used-pic"
+              src={lastTileUsedImg}
+              alt={lastTileUsed}
+            />
+          </div>
+        )}
       </div>
     );
   }
@@ -85,12 +106,19 @@ class App extends Component {
 export default App;
 
 class TileCount extends Component {
+  static propTypes = {
+    tileKey: PropTypes.string.isRequired,
+    remaining: PropTypes.number.isRequired,
+    total: PropTypes.number.isRequired,
+    addUsedTileFunc: PropTypes.func.isRequired,
+  };
+
   render() {
     const tileImg = require(`assets/images/${this.props.tileKey}.png`);
     const noneLeft = this.props.remaining <= 0;
     const clickFunc = () => {
       if (!noneLeft) {
-        this.props.setTileUsedFunc(this.props.tileKey);
+        this.props.addUsedTileFunc(this.props.tileKey);
       }
     };
     const tilePicClasses = classNames('tile-count-pic', {
@@ -113,17 +141,6 @@ class TileCount extends Component {
           </div>
           / {this.props.total}
         </div>
-      </div>
-    );
-  }
-}
-
-class TileUsed extends Component {
-  render() {
-    const tileImg = require(`assets/images/${this.props.tileKey}.png`);
-    return (
-      <div className="tile-used">
-        <img className="tile-used-pic" src={tileImg} alt={this.props.tileKey} />
       </div>
     );
   }

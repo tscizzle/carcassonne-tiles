@@ -1,3 +1,5 @@
+@import './vars';
+
 .app {
   display: flex;
   flex-direction: column;
@@ -13,14 +15,28 @@
   padding: 20px;
 }
 
+.undo-area {
+  display: flex;
+  align-items: center;
+
+  .tile-used-pic {
+    margin-left: 20px;
+    height: 55px;
+    width: 55px;
+    box-shadow: 0px 0px 5px $dark;
+    border: solid 1px $darker;
+    border-radius: 3px;
+  }
+}
+
 .tile-count {
   display: flex;
   flex-direction: column;
   margin: 20px;
 
   .tile-count-pic {
-    box-shadow: 0px 0px 10px #555;
-    border: solid 3px #333;
+    box-shadow: 0px 0px 10px $dark;
+    border: solid 3px $darker;
     border-radius: 5px;
 
     &.disabled {
@@ -51,27 +67,8 @@
       font-size: 2em;
 
       &.red {
-        color: red;
+        color: $red;
       }
     }
-  }
-}
-
-.tiles-used-container {
-  display: flex;
-  justify-content: center;
-  width: 90%;
-  overflow-x: scroll;
-}
-
-.tile-used {
-  margin: 5px;
-
-  .tile-used-pic {
-    height: 55px;
-    width: 55px;
-    box-shadow: 0px 0px 5px #555;
-    border: solid 1px #333;
-    border-radius: 3px;
   }
 }
